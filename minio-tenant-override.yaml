@@ -1,0 +1,9 @@
+tenant:
+  pools:
+  - servers: 1
+    volumesPerServer: 1
+    size: 1Gi
+  certificate:
+    requestAutoCert: false
+  buckets: 
+  - name: "druid"

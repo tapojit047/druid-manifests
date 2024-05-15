@@ -1,0 +1,9 @@
+apiVersion: ops.kubedb.com/v1alpha1
+kind: DruidOpsRequest
+metadata:
+  name: druid-restart
+  namespace: demo
+spec:
+  type: Restart
+  databaseRef:
+    name: druid-quickstart
