@@ -19,11 +19,16 @@ kubectl apply -f zookeeper.yaml
   - Install MinIO and S3 Bucket
   
   ```bash
-  helm upgrade --install --namespace "minio-operator" --create-namespace "minio-operator" minio/operator -f minio-operator-override.yaml
+  helm upgrade --install --namespace "minio-operator" --create-namespace "minio-operator" minio/operator --set operator.replicaCount=1
   ```
   ```bash
-  helm upgrade --install --namespace "druid" --create-namespace druid-minio \
-  minio/tenant -f minio-tenant-override.yaml
+  helm upgrade --install --namespace "demo" --create-namespace druid-minio minio/tenant \
+  --set tenant.pools[0].servers=1 \
+  --set tenant.pools[0].volumesPerServer=1 \
+  --set tenant.pools[0].size=1Gi \
+  --set tenant.certificate.requestAutoCert=false \
+  --set tenant.buckets[0].name="druid" \
+  --set tenant.pools[0].name="default"
   ```
   - Create deep-storage-config secret:
   

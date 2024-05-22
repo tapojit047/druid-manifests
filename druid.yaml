@@ -6,8 +6,6 @@ metadata:
 spec:
   version: 28.0.1
   storageType: Durable
-  #  configSecret:
-  #    name: custom-config
   deepStorage:
     type: s3
     configSecret:
@@ -22,8 +20,6 @@ spec:
   topology:
     coordinators:
       replicas: 1
-    #    overlords:
-    #      replicas: 1
     brokers:
       replicas: 1
     historicals:

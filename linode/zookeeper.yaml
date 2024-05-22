@@ -11,7 +11,7 @@ spec:
     resources:
       requests:
         storage: "100Mi"
-    storageClassName: "longhorn"
+    storageClassName: "linode-block-storage"
     accessModes:
       - ReadWriteOnce
   terminationPolicy: "WipeOut"

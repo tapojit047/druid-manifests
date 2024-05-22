@@ -5,7 +5,7 @@ metadata:
   namespace: demo
 spec:
   version: 28.0.1
-  storageType: Durable
+  storageType: Ephemeral
   #  configSecret:
   #    name: custom-config
   deepStorage:
@@ -22,10 +22,43 @@ spec:
   topology:
     coordinators:
       replicas: 1
-    #    overlords:
-    #      replicas: 1
+      podTemplate:
+        spec:
+          containers:
+          - name: druid
+            resources:
+              requests:
+                memory: 1Gi
+                cpu: 500m
+              limits:
+                memory: 5Gi
+                cpu: 1000m
+#    overlords:
+#      replicas: 1
+#      podTemplate:
+#        spec:
+#          containers:
+#            - name: druid
+#              resources:
+#                requests:
+#                  memory: 1Gi
+#                  cpu: 500m
+#                limits:
+#                  memory: 5Gi
+#                  cpu: 1000m
     brokers:
       replicas: 1
+      podTemplate:
+        spec:
+          containers:
+            - name: druid
+              resources:
+                requests:
+                  memory: 1Gi
+                  cpu: 500m
+                limits:
+                  memory: 5Gi
+                  cpu: 1000m
     historicals:
       replicas: 1
       storage:
@@ -33,17 +66,40 @@ spec:
           - ReadWriteOnce
         resources:
           requests:
-            storage: 500Mi
-        storageClassName: "longhorn"
+            storage: 1Gi
+        storageClassName: "linode-block-storage"
+      podTemplate:
+        spec:
+          containers:
+            - name: druid
+              resources:
+                requests:
+                  memory: 1Gi
+                  cpu: 500m
+                limits:
+                  memory: 5Gi
+                  cpu: 1000m
     middleManagers:
       replicas: 1
+      podTemplate:
+        spec:
+          containers:
+            - name: druid
+              resources:
+                requests:
+                  memory: 2.5Gi
+                  cpu: 500m
+                limits:
+                  memory: 5Gi
+                  cpu: 1000m
       storage:
         accessModes:
           - ReadWriteOnce
         resources:
           requests:
-            storage: 500Mi
-        storageClassName: "longhorn"
+            storage: 1Gi
+        storageClassName: "linode-block-storage"
+#        storageClassName: "longhorn"
     routers:
       replicas: 1
   serviceTemplates:
@@ -53,3 +109,10 @@ spec:
         ports:
           - name: routers
             port: 8888
+  monitor:
+    agent: prometheus.io/operator
+    prometheus:
+      serviceMonitor:
+        labels:
+          release: prometheus
+        interval: 10s
