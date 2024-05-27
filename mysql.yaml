@@ -6,7 +6,6 @@ metadata:
 spec:
   version: "8.0.35"
   storage:
-    storageClassName: "standard"
     accessModes:
       - ReadWriteOnce
     resources:

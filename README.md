@@ -30,6 +30,14 @@ kubectl apply -f zookeeper.yaml
   --set tenant.buckets[0].name="druid" \
   --set tenant.pools[0].name="default"
   ```
+  ```bash
+  helm upgrade --install --namespace "minio-operator" --create-namespace "minio-operator" minio/operator \
+  --set operator.replicaCount=1 \
+  --set operator.env[0].name=MINIO_OPERATOR_TLS_ENABLE \
+  --set operator.env[0].value="off" \
+  --set operator.env[1].name=MINIO_CONSOLE_TLS_ENABLE \
+  --set operator.env[1].value="off"
+  ```
   - Create deep-storage-config secret:
   
   ```bash
