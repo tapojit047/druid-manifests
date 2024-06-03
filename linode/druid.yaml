@@ -5,7 +5,6 @@ metadata:
   namespace: demo
 spec:
   version: 28.0.1
-  storageType: Ephemeral
   #  configSecret:
   #    name: custom-config
   deepStorage:

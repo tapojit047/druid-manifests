@@ -1,13 +1,13 @@
 apiVersion: ops.kubedb.com/v1alpha1
 kind: DruidOpsRequest
 metadata:
-  name: volume-expansion-online-3gi
+  name: volume-expansion-offline
   namespace: demo
 spec:
   type: VolumeExpansion
   databaseRef:
     name: druid-quickstart
   volumeExpansion:
-    mode: "Online"
-    middleManagers: 4Gi
-    historicals: 4Gi
+    mode: "Offline"
+    middleManagers: 5Gi
+    historicals: 5Gi

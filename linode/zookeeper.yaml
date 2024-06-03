@@ -14,4 +14,3 @@ spec:
     storageClassName: "linode-block-storage"
     accessModes:
       - ReadWriteOnce
-  terminationPolicy: "WipeOut"

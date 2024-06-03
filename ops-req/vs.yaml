@@ -8,38 +8,38 @@ spec:
   databaseRef:
     name: druid-quickstart
   verticalScaling:
-#    routers:
-#      resources:
-#        limits:
-#          memory: 1Gi
-#        requests:
-#          cpu: 600m
-#          memory: 1Gi
-#    middleManagers:
-#      resources:
-#        limits:
-#          memory: 2560Mi
-#        requests:
-#          cpu: 900m
-#          memory: 2560Mi
-#    historicals:
-#      resources:
-#        limits:
-#          memory: 2Gi
-#        requests:
-#          cpu: 500m
-#          memory: 1Gi
-#    brokers:
-#      resources:
-#        limits:
-#          memory: 1Gi
-#        requests:
-#          cpu: 600m
-#          memory: 1Gi
-#    coordinators:
-#      resources:
-#        limits:
-#          memory: 1Gi
-#        requests:
-#          cpu: 600m
-#          memory: 1Gi
+    routers:
+      resources:
+        limits:
+          memory: 2Gi
+        requests:
+          cpu: 600m
+          memory: 2Gi
+    middleManagers:
+      resources:
+        limits:
+          memory: 2560Mi
+        requests:
+          cpu: 900m
+          memory: 2560Mi
+    historicals:
+      resources:
+        limits:
+          memory: 2Gi
+        requests:
+          cpu: 500m
+          memory: 1Gi
+    brokers:
+      resources:
+        limits:
+          memory: 2Gi
+        requests:
+          cpu: 600m
+          memory: 2Gi
+    coordinators:
+      resources:
+        limits:
+          memory: 2Gi
+        requests:
+          cpu: 600m
+          memory: 2Gi

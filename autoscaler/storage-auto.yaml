@@ -7,8 +7,8 @@ spec:
   databaseRef:
     name: druid-quickstart
   storage:
-    middleManagers:
+    historicals:
       expansionMode: "Online"
       trigger: "On"
-      usageThreshold: 0.1
+      usageThreshold: 2
       scalingThreshold: 50

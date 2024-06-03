@@ -29,17 +29,17 @@ spec:
         memory: 5Gi
       resourceDiffPercentage: 20
       controlledResources: [ "cpu", "memory"]
-    overlords:
-      trigger: "On"
-      podLifeTimeThreshold: 1m
-      minAllowed:
-        cpu: 600m
-        memory: 2Gi
-      maxAllowed:
-        cpu: 1000m
-        memory: 5Gi
-      resourceDiffPercentage: 20
-      controlledResources: [ "cpu", "memory" ]
+#    overlords:
+#      trigger: "On"
+#      podLifeTimeThreshold: 1m
+#      minAllowed:
+#        cpu: 600m
+#        memory: 2Gi
+#      maxAllowed:
+#        cpu: 1000m
+#        memory: 5Gi
+#      resourceDiffPercentage: 20
+#      controlledResources: [ "cpu", "memory" ]
     brokers:
       trigger: "On"
       podLifeTimeThreshold: 1m
