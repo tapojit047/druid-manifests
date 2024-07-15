@@ -1,0 +1,142 @@
+apiVersion: kubedb.com/v1
+kind: Postgres
+metadata:
+  creationTimestamp: "2024-07-01T13:01:45Z"
+  finalizers:
+    - kubedb.com
+  generation: 3
+  name: druid-quickstart-pg-metadata
+  namespace: demo
+  ownerReferences:
+    - apiVersion: kubedb.com/v1alpha2
+      blockOwnerDeletion: true
+      controller: true
+      kind: Druid
+      name: druid-quickstart
+      uid: c67da2f2-582a-4fe7-ad81-0e1f7496c54d
+  resourceVersion: "359601"
+  uid: 007437c3-6d1a-4d1d-a9d7-d95d94bbd135
+spec:
+  allowedSchemas:
+    namespaces:
+      from: Same
+  arbiter:
+    resources:
+      limits:
+        memory: 256Mi
+      requests:
+        cpu: 200m
+        memory: 256Mi
+        storage: 2Gi
+  authSecret:
+    name: druid-quickstart-pg-metadata-auth
+  autoOps: {}
+  clientAuthMode: md5
+  healthChecker:
+    failureThreshold: 1
+    periodSeconds: 10
+    timeoutSeconds: 10
+  init:
+    script:
+      configMap:
+        name: druid-quickstart-init-script
+  leaderElection:
+    electionTick: 10
+    heartbeatTick: 1
+    maximumLagBeforeFailover: 67108864
+    period: 300ms
+    transferLeadershipInterval: 1s
+    transferLeadershipTimeout: 1m0s
+  podTemplate:
+    controller: {}
+    metadata: {}
+    spec:
+      containers:
+        - name: postgres
+          resources:
+            limits:
+              memory: 1Gi
+            requests:
+              cpu: 500m
+              memory: 1Gi
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+            runAsGroup: 70
+            runAsNonRoot: true
+            runAsUser: 70
+            seccompProfile:
+              type: RuntimeDefault
+        - name: pg-coordinator
+          resources:
+            limits:
+              memory: 256Mi
+            requests:
+              cpu: 200m
+              memory: 256Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+            runAsGroup: 70
+            runAsNonRoot: true
+            runAsUser: 70
+            seccompProfile:
+              type: RuntimeDefault
+      initContainers:
+        - name: postgres-init-container
+          resources:
+            limits:
+              memory: 512Mi
+            requests:
+              cpu: 200m
+              memory: 512Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+            runAsGroup: 70
+            runAsNonRoot: true
+            runAsUser: 70
+            seccompProfile:
+              type: RuntimeDefault
+      podPlacementPolicy:
+        name: default
+      securityContext:
+        fsGroup: 70
+        runAsGroup: 70
+        runAsUser: 70
+      serviceAccountName: druid-quickstart-pg-metadata
+  replicas: 3
+  replication:
+    walKeepSize: 1024
+    walLimitPolicy: WALKeepSize
+  sslMode: disable
+  storage:
+    accessModes:
+      - ReadWriteOnce
+    resources:
+      requests:
+        storage: 1Gi
+  storageType: Durable
+  terminationPolicy: Delete
+  version: "13.13"
+status:
+  conditions:
+    - lastTransitionTime: "2024-07-01T13:01:45Z"
+      message: 'The KubeDB operator has started the provisioning of Postgres: demo/druid-quickstart-pg-metadata'
+      reason: DatabaseProvisioningStartedSuccessfully
+      status: "True"
+      type: ProvisioningStarted
+    - lastTransitionTime: "2024-07-01T13:01:49Z"
+      message: 'All desired replicas are not ready. For PetSet: demo/druid-quickstart-pg-metadata
+      desired replicas: 3, ready replicas: 0.'
+      reason: SomeReplicasNotReady
+      status: "False"
+      type: ReplicaReady
+  observedGeneration: 2
+  phase: Provisioning

@@ -1,0 +1,125 @@
+apiVersion: kubedb.com/v1alpha2
+kind: MySQL
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"kubedb.com/v1alpha2","kind":"MySQL","metadata":{"annotations":{},"name":"mysql-demo","namespace":"demo"},"spec":{"init":{"script":{"configMap":{"name":"my-init-script"}}},"replicas":3,"storage":{"accessModes":["ReadWriteOnce"],"resources":{"requests":{"storage":"1Gi"}}},"version":"8.0.35"}}
+  creationTimestamp: "2024-06-25T06:47:41Z"
+  finalizers:
+  - kubedb.com
+  generation: 5
+  name: mysql-demo
+  namespace: demo
+  resourceVersion: "61507"
+  uid: 390b3136-5fbc-4b54-aabe-223e362933ce
+spec:
+  allowedReadReplicas:
+    namespaces:
+      from: Same
+  allowedSchemas:
+    namespaces:
+      from: Same
+  authSecret:
+    name: mysql-demo-auth
+  healthChecker:
+    failureThreshold: 1
+    periodSeconds: 10
+    timeoutSeconds: 10
+  init:
+    initialized: true
+    script:
+      configMap:
+        name: my-init-script
+  podTemplate:
+    spec:
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - podAffinityTerm:
+              labelSelector:
+                matchLabels:
+                  app.kubernetes.io/instance: mysql-demo
+                  app.kubernetes.io/managed-by: kubedb.com
+                  app.kubernetes.io/name: mysqls.kubedb.com
+              namespaces:
+              - demo
+              topologyKey: kubernetes.io/hostname
+            weight: 100
+          - podAffinityTerm:
+              labelSelector:
+                matchLabels:
+                  app.kubernetes.io/instance: mysql-demo
+                  app.kubernetes.io/managed-by: kubedb.com
+                  app.kubernetes.io/name: mysqls.kubedb.com
+              namespaces:
+              - demo
+              topologyKey: failure-domain.beta.kubernetes.io/zone
+            weight: 50
+      containerSecurityContext:
+        allowPrivilegeEscalation: false
+        capabilities:
+          drop:
+          - ALL
+        runAsGroup: 999
+        runAsNonRoot: true
+        runAsUser: 999
+        seccompProfile:
+          type: RuntimeDefault
+      resources:
+        limits:
+          memory: 1Gi
+        requests:
+          cpu: 500m
+          memory: 1Gi
+      securityContext:
+        fsGroup: 999
+      serviceAccountName: mysql-demo
+  replicas: 3
+  storage:
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 1Gi
+  storageType: Durable
+  terminationPolicy: Delete
+  useAddressType: DNS
+  version: 8.0.35
+status:
+  conditions:
+  - lastTransitionTime: "2024-06-25T06:47:41Z"
+    message: 'The KubeDB operator has started the provisioning of MySQL: demo/mysql-demo'
+    reason: DatabaseProvisioningStartedSuccessfully
+    status: "True"
+    type: ProvisioningStarted
+  - lastTransitionTime: "2024-06-25T09:57:56Z"
+    message: All desired replicas are ready.
+    reason: AllReplicasReady
+    status: "True"
+    type: ReplicaReady
+  - lastTransitionTime: "2024-06-25T09:57:18Z"
+    message: database demo/mysql-demo is accepting connection
+    observedGeneration: 5
+    reason: AcceptingConnection
+    status: "True"
+    type: AcceptingConnection
+  - lastTransitionTime: "2024-06-25T09:57:18Z"
+    message: database demo/mysql-demo is ready
+    observedGeneration: 5
+    reason: AllReplicasReady
+    status: "True"
+    type: Ready
+  - lastTransitionTime: "2024-06-25T06:48:26Z"
+    message: 'Data successfully restored into The MySQL databse: demo/mysql-demo'
+    observedGeneration: 3
+    reason: SuccessfullyDataRestored
+    status: "True"
+    type: DataRestored
+  - lastTransitionTime: "2024-06-25T06:48:26Z"
+    message: 'The MySQL: demo/mysql-demo is successfully provisioned.'
+    observedGeneration: 3
+    reason: DatabaseSuccessfullyProvisioned
+    status: "True"
+    type: Provisioned
+  observedGeneration: 5
+  phase: Ready

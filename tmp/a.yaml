@@ -1,0 +1,55 @@
+apiVersion: catalog.kubedb.com/v1alpha1
+kind: PostgresVersion
+metadata:
+  annotations:
+    meta.helm.sh/release-name: kubedb-catalog
+    meta.helm.sh/release-namespace: kubedb
+  creationTimestamp: "2024-07-01T12:23:45Z"
+  generation: 2
+  labels:
+    app.kubernetes.io/instance: kubedb-catalog
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: kubedb-catalog
+    app.kubernetes.io/version: v2024.4.27
+    helm.sh/chart: kubedb-catalog-v2024.4.27
+  name: "13.13"
+  resourceVersion: "41624"
+  uid: b07e2fc6-b622-40df-aa4d-4841562650da
+spec:
+  archiver:
+    addon:
+      name: postgres-addon
+      tasks:
+        manifestBackup:
+          name: manifest-backup
+        manifestRestore:
+          name: manifest-restore
+        volumeSnapshot:
+          name: volume-snapshot
+    walg:
+      image: ghcr.io/kubedb/postgres-archiver:v0.6.0_13.13-alpine
+  coordinator:
+    image: souravbiswassanto/pg-coordinator:petset_linux_amd64
+  db:
+    baseOS: alpine
+    image: ghcr.io/appscode-images/postgres:13.13-alpine
+  distribution: Official
+  exporter:
+    image: prometheuscommunity/postgres-exporter:v0.15.0
+  initContainer:
+    image: ghcr.io/kubedb/postgres-init:0.13.0
+  podSecurityPolicies:
+    databasePolicyName: postgres-db
+  securityContext:
+    runAsAnyNonRoot: false
+    runAsUser: 70
+  stash:
+    addon:
+      backupTask:
+        name: postgres-backup-13.1
+      restoreTask:
+        name: postgres-restore-13.1
+  updateConstraints:
+    allowlist:
+      - "14.1"
+  version: "13.13"

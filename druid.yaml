@@ -10,13 +10,17 @@ spec:
     configSecret:
       name: deep-storage-config
   metadataStorage:
-#    name: some-mysql
-    name: demo-pg
-    namespace: demo
-    createTables: true
-  zookeeperRef:
-    name: zookeeper
-    namespace: demo
+    type: PostgreSQL
+#    type: MySQL
+#    name: my-group
+#    name: demo-pg
+#    namespace: demo
+#    externallyManaged: true
+#    createTables: true
+#  zookeeperRef:
+#    name: zk-demo
+#    namespace: demo
+#    externallyManaged: true
   topology:
     routers:
       replicas: 1
@@ -27,3 +31,10 @@ spec:
 #          initContainers:
 #            init-druid:
 #              imagePullPolicy: Always
+  monitor:
+    agent: prometheus.io/operator
+    prometheus:
+      serviceMonitor:
+        labels:
+          release: prometheus
+        interval: 10s

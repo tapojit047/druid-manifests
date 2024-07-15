@@ -8,6 +8,7 @@ spec:
   replicas: 3
   standbyMode: Hot
   sslMode: verify-full
+  clientAuthMode: cert
   storageType: Durable
   tls:
     issuerRef:

@@ -13,4 +13,4 @@ spec:
         storage: "100Mi"
     accessModes:
       - ReadWriteOnce
-  terminationPolicy: "WipeOut"
+  deletionPolicy: "WipeOut"
