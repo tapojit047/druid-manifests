@@ -9,8 +9,8 @@ spec:
     type: s3
     configSecret:
       name: deep-storage-config
-  metadataStorage:
-    type: PostgreSQL
+#  metadataStorage:
+#    type: PostgreSQL
 #    type: MySQL
 #    name: my-group
 #    name: demo-pg
@@ -31,10 +31,18 @@ spec:
 #          initContainers:
 #            init-druid:
 #              imagePullPolicy: Always
-  monitor:
-    agent: prometheus.io/operator
-    prometheus:
-      serviceMonitor:
-        labels:
-          release: prometheus
-        interval: 10s
+#  monitor:
+#    agent: prometheus.io/operator
+#    prometheus:
+#      serviceMonitor:
+#        labels:
+#          release: prometheus
+#        interval: 10s
+  deletionPolicy: Halt
+  serviceTemplates:
+    - alias: primary
+      spec:
+        type: LoadBalancer
+        ports:
+          - name: routers
+            port: 8888
