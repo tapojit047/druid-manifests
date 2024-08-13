@@ -10,17 +10,13 @@ spec:
     configSecret:
       name: deep-storage-config
 #  metadataStorage:
-#    type: PostgreSQL
-#    type: MySQL
-#    name: my-group
+##    name: some-mysql
 #    name: demo-pg
 #    namespace: demo
-#    externallyManaged: true
 #    createTables: true
 #  zookeeperRef:
-#    name: zk-demo
+#    name: zookeeper
 #    namespace: demo
-#    externallyManaged: true
   topology:
     routers:
       replicas: 1

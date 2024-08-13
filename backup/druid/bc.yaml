@@ -1,0 +1,39 @@
+apiVersion: core.kubestash.com/v1alpha1
+kind: BackupConfiguration
+metadata:
+  name: db-backup
+  namespace: demo
+spec:
+  target:
+    apiGroup: kubedb.com
+    kind: Druid
+    namespace: demo
+    name: druid-quickstart
+  backends:
+    - name: s3-backend
+      storageRef:
+        namespace: demo
+        name: s3-storage
+      retentionPolicy:
+        name: manifest-rp
+        namespace: demo
+  sessions:
+    - name: frequent-backup
+      sessionHistoryLimit: 3
+      scheduler:
+        schedule: "*/1 * * * *"
+        successfulJobsHistoryLimit: 1
+        failedJobsHistoryLimit: 1
+        jobTemplate:
+          backoffLimit: 1
+      repositories:
+        - name: s3-repo
+          backend: s3-backend
+          directory: /dr-mf
+          encryptionSecret:
+           name: encry-secret # some addon may not support encryption
+           namespace: demo
+      addon:
+        name: druid-addon
+        tasks:
+          - name: manifest-backup
