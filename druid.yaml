@@ -13,15 +13,17 @@ spec:
 ##    name: some-mysql
 #    name: demo-pg
 #    namespace: demo
+#    externallyManaged: true
 #    createTables: true
 #  zookeeperRef:
-#    name: zookeeper
+#    name: zk-demo
 #    namespace: demo
   topology:
-    routers:
-      replicas: 1
-#    coordinators:
+#    routers:
 #      replicas: 1
+#  deletionPolicy: Halt
+    coordinators:
+      replicas: 2
 #      podTemplate:
 #        spec:
 #          initContainers:
@@ -34,11 +36,11 @@ spec:
 #        labels:
 #          release: prometheus
 #        interval: 10s
-  deletionPolicy: Halt
-  serviceTemplates:
-    - alias: primary
-      spec:
-        type: LoadBalancer
-        ports:
-          - name: routers
-            port: 8888
+#  deletionPolicy: Halt
+#  serviceTemplates:
+#    - alias: primary
+#      spec:
+#        type: LoadBalancer
+#        ports:
+#          - name: routers
+#            port: 8888

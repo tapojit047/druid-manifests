@@ -1,0 +1,41 @@
+apiVersion: core.kubestash.com/v1alpha1
+kind: BackupConfiguration
+metadata:
+  name: db-backup
+  namespace: demo
+spec:
+  target:
+    apiGroup: kubedb.com
+    kind: MySQL
+    namespace: demo
+    name: druid-quickstart-mysql-metadata
+  backends:
+    - name: s3-backend
+      storageRef:
+        namespace: demo
+        name: s3-storage
+      retentionPolicy:
+        name: manifest-rp
+        namespace: demo
+  sessions:
+    - name: frequent-backup
+      sessionHistoryLimit: 3
+      scheduler:
+        schedule: "*/1 * * * *"
+        successfulJobsHistoryLimit: 1
+        failedJobsHistoryLimit: 1
+        jobTemplate:
+          backoffLimit: 1
+      repositories:
+        - name: s3-repo
+          backend: s3-backend
+          directory: /mysql
+          encryptionSecret:
+            name: encry-secret # some addon may not support encryption
+            namespace: demo
+      addon:
+        name: mysql-addon
+        tasks:
+          - name: logical-backup
+            params:
+              databases: druid

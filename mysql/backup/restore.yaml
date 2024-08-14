@@ -1,0 +1,21 @@
+apiVersion: core.kubestash.com/v1alpha1
+kind: RestoreSession
+metadata:
+  name: mysql-restoresession
+  namespace: demo
+spec:
+  target:
+    name: druid-quickstart-mysql-metadata
+    namespace: demo
+    apiGroup: kubedb.com
+    kind: MySQL
+  dataSource:
+    snapshot: latest
+    repository: s3-repo
+    encryptionSecret:
+      name: encry-secret
+      namespace: demo
+  addon:
+    name: mysql-addon
+    tasks:
+      - name: logical-backup-restore
