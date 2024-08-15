@@ -1,0 +1,307 @@
+apiVersion: v1
+items:
+- apiVersion: kubedb.com/v1alpha2
+  kind: Druid
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"kubedb.com/v1alpha2","kind":"Druid","metadata":{"annotations":{},"name":"druid-quickstart","namespace":"demo"},"spec":{"deepStorage":{"configSecret":{"name":"deep-storage-config"},"type":"s3"},"topology":{"routers":{"replicas":1}},"version":"28.0.1"}}
+    creationTimestamp: "2024-08-14T13:31:40Z"
+    finalizers:
+    - kubedb.com/druid
+    generation: 1
+    name: new-db
+    namespace: demo2
+    resourceVersion: "139004"
+    uid: c4b16494-5640-49a3-b160-55a94aa99ee8
+  spec:
+    authSecret:
+      name: druid-quickstart-admin-cred
+    deepStorage:
+      configSecret:
+        name: deep-storage-config
+      type: s3
+    deletionPolicy: Delete
+    disableSecurity: false
+    healthChecker:
+      failureThreshold: 3
+      periodSeconds: 30
+      timeoutSeconds: 10
+    metadataStorage:
+      createTables: true
+      linkedDB: druid
+      name: new-db-mysql-metadata
+      namespace: demo
+      type: MySQL
+      version: 8.0.35
+    topology:
+      brokers:
+        podTemplate:
+          controller: {}
+          metadata: {}
+          spec:
+            containers:
+            - name: druid
+              resources:
+                limits:
+                  memory: 1Gi
+                requests:
+                  cpu: 500m
+                  memory: 1Gi
+              securityContext:
+                allowPrivilegeEscalation: false
+                capabilities:
+                  drop:
+                  - ALL
+                runAsNonRoot: true
+                runAsUser: 1000
+                seccompProfile:
+                  type: RuntimeDefault
+            initContainers:
+            - name: init-druid
+              resources:
+                limits:
+                  memory: 512Mi
+                requests:
+                  cpu: 200m
+                  memory: 512Mi
+              securityContext:
+                allowPrivilegeEscalation: false
+                capabilities:
+                  drop:
+                  - ALL
+                runAsNonRoot: true
+                runAsUser: 1000
+                seccompProfile:
+                  type: RuntimeDefault
+            podPlacementPolicy:
+              name: default
+            securityContext:
+              fsGroup: 1000
+        replicas: 1
+      coordinators:
+        podTemplate:
+          controller: {}
+          metadata: {}
+          spec:
+            containers:
+            - name: druid
+              resources:
+                limits:
+                  memory: 1Gi
+                requests:
+                  cpu: 500m
+                  memory: 1Gi
+              securityContext:
+                allowPrivilegeEscalation: false
+                capabilities:
+                  drop:
+                  - ALL
+                runAsNonRoot: true
+                runAsUser: 1000
+                seccompProfile:
+                  type: RuntimeDefault
+            initContainers:
+            - name: init-druid
+              resources:
+                limits:
+                  memory: 512Mi
+                requests:
+                  cpu: 200m
+                  memory: 512Mi
+              securityContext:
+                allowPrivilegeEscalation: false
+                capabilities:
+                  drop:
+                  - ALL
+                runAsNonRoot: true
+                runAsUser: 1000
+                seccompProfile:
+                  type: RuntimeDefault
+            podPlacementPolicy:
+              name: default
+            securityContext:
+              fsGroup: 1000
+        replicas: 1
+      historicals:
+        podTemplate:
+          controller: {}
+          metadata: {}
+          spec:
+            containers:
+            - name: druid
+              resources:
+                limits:
+                  memory: 1Gi
+                requests:
+                  cpu: 500m
+                  memory: 1Gi
+              securityContext:
+                allowPrivilegeEscalation: false
+                capabilities:
+                  drop:
+                  - ALL
+                runAsNonRoot: true
+                runAsUser: 1000
+                seccompProfile:
+                  type: RuntimeDefault
+            initContainers:
+            - name: init-druid
+              resources:
+                limits:
+                  memory: 512Mi
+                requests:
+                  cpu: 200m
+                  memory: 512Mi
+              securityContext:
+                allowPrivilegeEscalation: false
+                capabilities:
+                  drop:
+                  - ALL
+                runAsNonRoot: true
+                runAsUser: 1000
+                seccompProfile:
+                  type: RuntimeDefault
+            podPlacementPolicy:
+              name: default
+            securityContext:
+              fsGroup: 1000
+        replicas: 1
+        storage:
+          accessModes:
+          - ReadWriteOnce
+          resources:
+            requests:
+              storage: 1Gi
+        storageType: Durable
+      middleManagers:
+        podTemplate:
+          controller: {}
+          metadata: {}
+          spec:
+            containers:
+            - name: druid
+              resources:
+                limits:
+                  memory: 2560Mi
+                requests:
+                  cpu: 500m
+                  memory: 2560Mi
+              securityContext:
+                allowPrivilegeEscalation: false
+                capabilities:
+                  drop:
+                  - ALL
+                runAsNonRoot: true
+                runAsUser: 1000
+                seccompProfile:
+                  type: RuntimeDefault
+            initContainers:
+            - name: init-druid
+              resources:
+                limits:
+                  memory: 512Mi
+                requests:
+                  cpu: 200m
+                  memory: 512Mi
+              securityContext:
+                allowPrivilegeEscalation: false
+                capabilities:
+                  drop:
+                  - ALL
+                runAsNonRoot: true
+                runAsUser: 1000
+                seccompProfile:
+                  type: RuntimeDefault
+            podPlacementPolicy:
+              name: default
+            securityContext:
+              fsGroup: 1000
+        replicas: 1
+        storage:
+          accessModes:
+          - ReadWriteOnce
+          resources:
+            requests:
+              storage: 1Gi
+        storageType: Durable
+      routers:
+        podTemplate:
+          controller: {}
+          metadata: {}
+          spec:
+            containers:
+            - name: druid
+              resources:
+                limits:
+                  memory: 1Gi
+                requests:
+                  cpu: 500m
+                  memory: 1Gi
+              securityContext:
+                allowPrivilegeEscalation: false
+                capabilities:
+                  drop:
+                  - ALL
+                runAsNonRoot: true
+                runAsUser: 1000
+                seccompProfile:
+                  type: RuntimeDefault
+            initContainers:
+            - name: init-druid
+              resources:
+                limits:
+                  memory: 512Mi
+                requests:
+                  cpu: 200m
+                  memory: 512Mi
+              securityContext:
+                allowPrivilegeEscalation: false
+                capabilities:
+                  drop:
+                  - ALL
+                runAsNonRoot: true
+                runAsUser: 1000
+                seccompProfile:
+                  type: RuntimeDefault
+            podPlacementPolicy:
+              name: default
+            securityContext:
+              fsGroup: 1000
+        replicas: 1
+    version: 28.0.1
+    zookeeperRef:
+      name: new-db-zk
+      namespace: demo
+      version: 3.7.2
+  status:
+    conditions:
+    - lastTransitionTime: "2024-08-14T13:31:40Z"
+      message: 'The KubeDB operator has started the provisioning of Druid: demo2/new-db'
+      observedGeneration: 1
+      reason: DatabaseProvisioningStartedSuccessfully
+      status: "True"
+      type: ProvisioningStarted
+    - lastTransitionTime: "2024-08-14T13:31:40Z"
+      message: 'The metadata storage MySQL: demo/new-db-mysql-metadata is not ready.'
+      observedGeneration: 1
+      reason: FailedToEnsureDependency
+      status: "False"
+      type: DatabaseDependencyReady
+    - lastTransitionTime: "2024-08-14T13:31:41Z"
+      message: 'The Druid: demo2/new-db is accepting client requests and nodes formed
+        a cluster'
+      observedGeneration: 1
+      reason: DatabaseAcceptingConnectionRequest
+      status: "True"
+      type: AcceptingConnection
+    - lastTransitionTime: "2024-08-14T13:32:06Z"
+      message: 'The Druid: demo2/new-db is ready.'
+      observedGeneration: 1
+      reason: ReadinessCheckSucceeded
+      status: "True"
+      type: Ready
+    phase: Provisioning
+kind: List
+metadata:
+  resourceVersion: ""

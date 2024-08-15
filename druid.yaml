@@ -2,7 +2,7 @@ apiVersion: kubedb.com/v1alpha2
 kind: Druid
 metadata:
   name: druid-quickstart
-  namespace: demo
+  namespace: demo2
 spec:
   version: 28.0.1
   deepStorage:
@@ -10,6 +10,7 @@ spec:
     configSecret:
       name: deep-storage-config
 #  metadataStorage:
+#    type: PostgreSQL
 ##    name: some-mysql
 #    name: demo-pg
 #    namespace: demo
@@ -19,8 +20,8 @@ spec:
 #    name: zk-demo
 #    namespace: demo
   topology:
-#    routers:
-#      replicas: 1
+    routers:
+      replicas: 1
 #  deletionPolicy: Halt
     coordinators:
       replicas: 2

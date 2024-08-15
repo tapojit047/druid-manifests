@@ -1,21 +1,25 @@
 apiVersion: core.kubestash.com/v1alpha1
 kind: RestoreSession
 metadata:
-  name: mysql-restoresession
+  name: sample-restore
   namespace: demo
 spec:
-  target:
-    name: mysql
-    namespace: demo
-    apiGroup: kubedb.com
-    kind: MySQL
+  manifestOptions:
+    restoreNamespace: demo2
+    druid:
+      db: true
+      dbName: new-db
+      #authSecret: true
+      # authSecretName: new-db-ss
+      #configSecret: true
   dataSource:
     snapshot: latest
     repository: s3-repo
     encryptionSecret:
-      name: encry-secret 
+      name: encry-secret # some addon may not support encryption
       namespace: demo
   addon:
-    name: mysql-addon
+    name: druid-addon
     tasks:
-      - name: logical-backup-restore
+#      - name: logical-backup-restore
+      - name: manifest-restore
