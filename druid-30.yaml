@@ -2,27 +2,27 @@ apiVersion: kubedb.com/v1alpha2
 kind: Druid
 metadata:
   name: druid-quickstart
-  namespace: demo
+  namespace: demo2
 spec:
-  version: 28.0.1
+  version: 30.0.0
   deepStorage:
     type: s3
     configSecret:
       name: deep-storage-config
-  metadataStorage:
-    type: PostgreSQL
-##    name: some-mysql
-#    name: demo-pg
-#    namespace: demo
-#    externallyManaged: true
-#    createTables: true
-#  zookeeperRef:
-#    name: zk-demo
-#    namespace: demo
+#  metadataStorage:
+#    type: PostgreSQL
+  ##    name: some-mysql
+  #    name: demo-pg
+  #    namespace: demo
+  #    externallyManaged: true
+  #    createTables: true
+  #  zookeeperRef:
+  #    name: zk-demo
+  #    namespace: demo
   topology:
     routers:
       replicas: 1
-#  deletionPolicy: Halt
+    #  deletionPolicy: Halt
     coordinators:
       replicas: 2
 #      podTemplate:

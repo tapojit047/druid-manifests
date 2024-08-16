@@ -10,7 +10,6 @@ spec:
     mode: GroupReplication
   storageType: Durable
   storage:
-    storageClassName: "standard"
     accessModes:
       - ReadWriteOnce
     resources:

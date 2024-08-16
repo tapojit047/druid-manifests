@@ -2,22 +2,23 @@ apiVersion: core.kubestash.com/v1alpha1
 kind: RestoreSession
 metadata:
   name: sample-restore
-  namespace: demo
+  namespace: demo3
 spec:
   manifestOptions:
-    restoreNamespace: demo2
+    restoreNamespace: demo
     druid:
       db: true
       dbName: new-db
-      #authSecret: true
       authSecretName: tapo-auth
       #configSecret: true
-      metadataStorage:
-        name: pg-demo
-        namespace: demo2
-#      zooKeeper:
-#        name: zk-demo
-#        namespace: demo2
+    mySQL:
+      db: true
+      authSecret: true
+      authSecretName: xoxo
+    zooKeeper:
+      db: true
+      authSecret: true
+      authSecretName: pppp
   dataSource:
     snapshot: latest
     repository: s3-repo
@@ -27,5 +28,5 @@ spec:
   addon:
     name: druid-addon
     tasks:
-#      - name: logical-backup-restore
+      #      - name: logical-backup-restore
       - name: manifest-restore

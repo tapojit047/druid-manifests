@@ -1,0 +1,146 @@
+apiVersion: kubedb.com/v1
+kind: MySQL
+metadata:
+  creationTimestamp: "2024-08-15T12:27:33Z"
+  finalizers:
+  - kubedb.com
+  generation: 2
+  name: new-db-mysql-metadata
+  namespace: demo2
+  ownerReferences:
+  - apiVersion: kubedb.com/v1alpha2
+    blockOwnerDeletion: true
+    controller: true
+    kind: Druid
+    name: new-db
+    uid: cab281a6-54ca-4b63-87c6-38c2140440a2
+  resourceVersion: "311561"
+  uid: e4c50ef1-d7c5-426b-8bde-bd112bf66eeb
+spec:
+  allowedReadReplicas:
+    namespaces:
+      from: Same
+  allowedSchemas:
+    namespaces:
+      from: Same
+  authSecret:
+    name: new-db-mysql-metadata-auth
+  autoOps: {}
+  deletionPolicy: Delete
+  healthChecker:
+    failureThreshold: 1
+    periodSeconds: 10
+    timeoutSeconds: 10
+  init:
+    script:
+      configMap:
+        name: new-db-init-script
+  podTemplate:
+    controller: {}
+    metadata: {}
+    spec:
+      containers:
+      - name: mysql
+        resources:
+          limits:
+            memory: 1Gi
+          requests:
+            cpu: 500m
+            memory: 1Gi
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          runAsGroup: 999
+          runAsNonRoot: true
+          runAsUser: 999
+          seccompProfile:
+            type: RuntimeDefault
+      - name: mysql-coordinator
+        resources:
+          limits:
+            memory: 256Mi
+          requests:
+            cpu: 200m
+            memory: 256Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          runAsGroup: 999
+          runAsNonRoot: true
+          runAsUser: 999
+          seccompProfile:
+            type: RuntimeDefault
+      initContainers:
+      - name: mysql-init
+        resources:
+          limits:
+            memory: 512Mi
+          requests:
+            cpu: 200m
+            memory: 512Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          runAsGroup: 999
+          runAsNonRoot: true
+          runAsUser: 999
+          seccompProfile:
+            type: RuntimeDefault
+      podPlacementPolicy:
+        name: default
+      securityContext:
+        fsGroup: 999
+      serviceAccountName: new-db-mysql-metadata
+  replicas: 3
+  storage:
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 1Gi
+  storageType: Durable
+  topology:
+    group:
+      mode: Single-Primary
+      name: 3daf1259-73c8-4d75-bffc-ea9ea47bb992
+    mode: GroupReplication
+  useAddressType: DNS
+  version: 8.0.35
+status:
+  conditions:
+  - lastTransitionTime: "2024-08-15T12:27:33Z"
+    message: 'The KubeDB operator has started the provisioning of MySQL: demo2/new-db-mysql-metadata'
+    reason: DatabaseProvisioningStartedSuccessfully
+    status: "True"
+    type: ProvisioningStarted
+  - lastTransitionTime: "2024-08-15T12:28:57Z"
+    message: All desired replicas are ready.
+    reason: AllReplicasReady
+    status: "True"
+    type: ReplicaReady
+  - lastTransitionTime: "2024-08-15T12:29:58Z"
+    message: database demo2/new-db-mysql-metadata is accepting connection
+    observedGeneration: 2
+    reason: AcceptingConnection
+    status: "True"
+    type: AcceptingConnection
+  - lastTransitionTime: "2024-08-15T12:29:58Z"
+    message: database demo2/new-db-mysql-metadata is ready
+    observedGeneration: 2
+    reason: AllReplicasReady
+    status: "True"
+    type: Ready
+  - lastTransitionTime: "2024-08-15T12:30:00Z"
+    message: 'The MySQL: demo2/new-db-mysql-metadata is successfully provisioned.'
+    observedGeneration: 2
+    reason: DatabaseSuccessfullyProvisioned
+    status: "True"
+    type: Provisioned
+  observedGeneration: 2
+  phase: Ready

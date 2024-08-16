@@ -1,0 +1,120 @@
+metadata:
+  finalizers:
+  - kubedb.com
+  name: druid-quickstart-pg-metadata
+  namespace: demo
+  ownerReferences:
+  - apiVersion: kubedb.com/v1alpha2
+    blockOwnerDeletion: true
+    controller: true
+    kind: Druid
+    name: druid-quickstart
+    uid: d4f512df-2546-446a-9182-8373c34cc5bb
+spec:
+  allowedSchemas:
+    namespaces:
+      from: Same
+  arbiter:
+    resources:
+      limits:
+        memory: 256Mi
+      requests:
+        cpu: 200m
+        memory: 256Mi
+        storage: 2Gi
+  authSecret:
+    name: druid-quickstart-pg-metadata-auth
+  autoOps: {}
+  clientAuthMode: md5
+  coordinator:
+    resources:
+      limits:
+        memory: 256Mi
+      requests:
+        cpu: 200m
+        memory: 256Mi
+    securityContext:
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop:
+        - ALL
+      runAsGroup: 70
+      runAsNonRoot: true
+      runAsUser: 70
+      seccompProfile:
+        type: RuntimeDefault
+  healthChecker:
+    failureThreshold: 1
+    periodSeconds: 10
+    timeoutSeconds: 10
+  init:
+    initialized: true
+    script:
+      configMap:
+        name: druid-quickstart-init-script
+  leaderElection:
+    electionTick: 10
+    heartbeatTick: 1
+    maximumLagBeforeFailover: 67108864
+    period: 300ms
+    transferLeadershipInterval: 1s
+    transferLeadershipTimeout: 1m0s
+  podTemplate:
+    controller: {}
+    metadata: {}
+    spec:
+      containerSecurityContext:
+        allowPrivilegeEscalation: false
+        capabilities:
+          drop:
+          - ALL
+        runAsGroup: 70
+        runAsNonRoot: true
+        runAsUser: 70
+        seccompProfile:
+          type: RuntimeDefault
+      initContainers:
+      - name: postgres-init-container
+        resources:
+          limits:
+            memory: 512Mi
+          requests:
+            cpu: 200m
+            memory: 512Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          runAsGroup: 70
+          runAsNonRoot: true
+          runAsUser: 70
+          seccompProfile:
+            type: RuntimeDefault
+      podPlacementPolicy:
+        name: default
+      resources:
+        limits:
+          memory: 1Gi
+        requests:
+          cpu: 500m
+          memory: 1Gi
+      securityContext:
+        fsGroup: 70
+        runAsGroup: 70
+        runAsUser: 70
+      serviceAccountName: druid-quickstart-pg-metadata
+  replicas: 3
+  replication:
+    walKeepSize: 1024
+    walLimitPolicy: WALKeepSize
+  sslMode: disable
+  storage:
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 1Gi
+  storageType: Durable
+  terminationPolicy: Delete
+  version: "13.13"
