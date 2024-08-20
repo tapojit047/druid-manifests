@@ -9,8 +9,8 @@ spec:
     type: s3
     configSecret:
       name: deep-storage-config
-  metadataStorage:
-    type: PostgreSQL
+#  metadataStorage:
+#    type: PostgreSQL
 ##    name: some-mysql
 #    name: demo-pg
 #    namespace: demo
@@ -23,8 +23,8 @@ spec:
     routers:
       replicas: 1
 #  deletionPolicy: Halt
-    coordinators:
-      replicas: 2
+#    coordinators:
+#      replicas: 2
 #      podTemplate:
 #        spec:
 #          initContainers:

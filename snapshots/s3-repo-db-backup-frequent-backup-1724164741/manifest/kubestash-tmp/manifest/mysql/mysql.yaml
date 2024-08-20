@@ -1,0 +1,107 @@
+metadata:
+  finalizers:
+  - kubedb.com
+  name: druid-quickstart-mysql-metadata
+  namespace: demo
+  ownerReferences:
+  - apiVersion: kubedb.com/v1alpha2
+    blockOwnerDeletion: true
+    controller: true
+    kind: Druid
+    name: druid-quickstart
+    uid: e16cdeff-016d-4b1f-9cc4-34c1e86e594d
+spec:
+  allowedReadReplicas:
+    namespaces:
+      from: Same
+  allowedSchemas:
+    namespaces:
+      from: Same
+  authSecret:
+    name: druid-quickstart-mysql-metadata-auth
+  autoOps: {}
+  coordinator:
+    resources:
+      limits:
+        memory: 256Mi
+      requests:
+        cpu: 200m
+        memory: 256Mi
+    securityContext:
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop:
+        - ALL
+      runAsGroup: 999
+      runAsNonRoot: true
+      runAsUser: 999
+      seccompProfile:
+        type: RuntimeDefault
+  healthChecker:
+    failureThreshold: 1
+    periodSeconds: 10
+    timeoutSeconds: 10
+  init:
+    initialized: true
+    script:
+      configMap:
+        name: druid-quickstart-init-script
+  podTemplate:
+    controller: {}
+    metadata: {}
+    spec:
+      containerSecurityContext:
+        allowPrivilegeEscalation: false
+        capabilities:
+          drop:
+          - ALL
+        runAsGroup: 999
+        runAsNonRoot: true
+        runAsUser: 999
+        seccompProfile:
+          type: RuntimeDefault
+      initContainers:
+      - name: mysql-init
+        resources:
+          limits:
+            memory: 512Mi
+          requests:
+            cpu: 200m
+            memory: 512Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          runAsGroup: 999
+          runAsNonRoot: true
+          runAsUser: 999
+          seccompProfile:
+            type: RuntimeDefault
+      podPlacementPolicy:
+        name: default
+      resources:
+        limits:
+          memory: 1Gi
+        requests:
+          cpu: 500m
+          memory: 1Gi
+      securityContext:
+        fsGroup: 999
+      serviceAccountName: druid-quickstart-mysql-metadata
+  replicas: 3
+  storage:
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 1Gi
+  storageType: Durable
+  terminationPolicy: Delete
+  topology:
+    group:
+      mode: Single-Primary
+      name: 972ed054-65e1-44f4-8fe6-98a427cc96c9
+    mode: GroupReplication
+  useAddressType: DNS
+  version: 8.0.35

@@ -2,7 +2,7 @@ apiVersion: kubedb.com/v1alpha2
 kind: Druid
 metadata:
   name: druid-quickstart
-  namespace: demo2
+  namespace: demo
 spec:
   version: 30.0.0
   deepStorage:
@@ -16,15 +16,15 @@ spec:
   #    namespace: demo
   #    externallyManaged: true
   #    createTables: true
-  #  zookeeperRef:
-  #    name: zk-demo
-  #    namespace: demo
+#  zookeeperRef:
+#    name: zk-100
+#    namespace: demo
   topology:
     routers:
       replicas: 1
     #  deletionPolicy: Halt
-    coordinators:
-      replicas: 2
+#    coordinators:
+#      replicas: 2
 #      podTemplate:
 #        spec:
 #          initContainers:
