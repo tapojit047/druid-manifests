@@ -9,12 +9,16 @@ spec:
     druid:
       db: true
       dbName: new-db
+      deepStorageSecret: true
       #authSecret: true
-      authSecretName: tapo-auth
+#      authSecretName: tapo-auth
       #configSecret: true
       metadataStorage:
-        name: pg-demo
-        namespace: demo2
+        restore: true
+      zooKeeper:
+        restore: true
+#        name: pg-demo
+#        namespace: demo2
 #      zooKeeper:
 #        name: zk-demo
 #        namespace: demo2
