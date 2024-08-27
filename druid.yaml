@@ -11,13 +11,14 @@ spec:
       name: deep-storage-config
 #  metadataStorage:
 #    type: PostgreSQL
-##    name: some-mysql
+#    name: my-group
 #    name: demo-pg
 #    namespace: demo
 #    externallyManaged: true
 #    createTables: true
 #  zookeeperRef:
 #    name: zk-demo
+#    externallyManaged: true
 #    namespace: demo
   topology:
     routers:

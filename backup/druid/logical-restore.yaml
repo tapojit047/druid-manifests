@@ -1,0 +1,21 @@
+apiVersion: core.kubestash.com/v1alpha1
+kind: RestoreSession
+metadata:
+  name: druid-logical-restoresession
+  namespace: demo
+spec:
+  target:
+    name: druid-quickstart
+    namespace: demo
+    apiGroup: kubedb.com
+    kind: Druid
+  dataSource:
+    snapshot: latest
+    repository: s3-repo
+    encryptionSecret:
+      name: encry-secret
+      namespace: demo
+  addon:
+    name: druid-addon
+    tasks:
+      - name: logical-backup-restore

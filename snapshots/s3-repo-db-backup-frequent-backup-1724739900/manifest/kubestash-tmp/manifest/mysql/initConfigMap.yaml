@@ -1,0 +1,5 @@
+data:
+  mysql-init-script.sql: "CREATE DATABASE druid;\n       "
+metadata:
+  name: my-init-script
+  namespace: demo

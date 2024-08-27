@@ -1,0 +1,12 @@
+data:
+  data.sql: CREATE DATABASE druid;
+metadata:
+  name: druid-quickstart-init-script
+  namespace: demo
+  ownerReferences:
+  - apiVersion: kubedb.com/v1alpha2
+    blockOwnerDeletion: true
+    controller: true
+    kind: Druid
+    name: druid-quickstart
+    uid: f2efe91b-5cd9-4962-9df1-3250ba90ff7d
