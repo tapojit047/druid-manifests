@@ -9,8 +9,8 @@ spec:
     type: s3
     configSecret:
       name: deep-storage-config
-#  metadataStorage:
-#    type: PostgreSQL
+  metadataStorage:
+    type: PostgreSQL
 #    name: my-group
 #    name: demo-pg
 #    namespace: demo

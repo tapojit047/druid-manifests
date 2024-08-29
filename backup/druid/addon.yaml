@@ -55,6 +55,41 @@ spec:
       source:
         emptyDir: { }
       usage: Holds temporary files and restic cache.
+
+  - driver: Restic
+    executor: Job
+    function: postgres-backup
+    name: logical-backup-pg
+    parameters:
+    - name: args
+      required: false
+      usage: Arguments to be passed to the dump command.
+    - default: pg_dumpall
+      name: backupCmd
+      required: false
+      usage: Backup command to take a database dump (can only be pg_dumpall or pg_dump)
+    - default: postgres
+      name: user
+      required: false
+      usage: Specifies database user (not applicable for basic authentication)
+    - default: "true"
+      name: enableCache
+      required: false
+      usage: Enable or disable caching. Disabling caching may impact backup performance.
+    - default: /kubestash-tmp
+      name: scratchDir
+      required: false
+      usage: Directory for holding temporary files and restic cache.
+    singleton: true
+    volumeMounts:
+    - mountPath: /kubestash-tmp
+      name: kubestash-tmp-volume
+    volumeTemplate:
+    - name: kubestash-tmp-volume
+      source:
+        emptyDir: { }
+      usage: Holds temporary files and restic cache.
+
   restoreTasks:
   - driver: Restic
     executor: Job
@@ -103,3 +138,34 @@ spec:
       source:
         emptyDir: {}
       usage: Holds temporary files and restic cache.
+
+  - driver: Restic
+    executor: Job
+    function: postgres-restore
+    name: logical-backup-restore-pg
+    parameters:
+    - name: args
+      required: false
+      usage: Arguments to be passed to the dump command.
+    - default: postgres
+      name: user
+      required: false
+      usage: Specifies database user (not applicable for basic authentication)
+    - default: "true"
+      name: enableCache
+      required: false
+      usage: Enable or disable caching. Disabling caching may impact backup performance.
+    - default: /kubestash-tmp
+      name: scratchDir
+      required: false
+      usage: Directory for holding temporary files and restic cache.
+    singleton: true
+    volumeMounts:
+    - mountPath: /kubestash-tmp
+      name: kubestash-tmp-volume
+    volumeTemplate:
+    - name: kubestash-tmp-volume
+      source:
+        emptyDir: {}
+      usage: Holds temporary files and restic cache.
+

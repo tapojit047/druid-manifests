@@ -37,4 +37,4 @@ spec:
         name: druid-addon
         tasks:
 #          - name: manifest-backup
-          - name: logical-backup
+          - name: logical-backup-pg
