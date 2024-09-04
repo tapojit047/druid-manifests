@@ -1,4 +1,4 @@
-apiVersion: kubedb.com/v1alpha2
+apiVersion: kubedb.com/v1
 kind: MySQL
 metadata:
   name: my-group
@@ -8,6 +8,9 @@ spec:
   replicas: 3
   topology:
     mode: GroupReplication
+    group:
+      mode: Single-Primary
+      name: 3daf1259-73c8-4d75-bffc-ea9ea47bb992
   storageType: Durable
   storage:
     accessModes:
@@ -15,7 +18,7 @@ spec:
     resources:
       requests:
         storage: 1Gi
-  terminationPolicy: WipeOut
+  deletionPolicy: WipeOut
   init:
     script:
       configMap:

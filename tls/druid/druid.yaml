@@ -10,6 +10,12 @@ spec:
     configSecret:
       name: deep-storage-config
   enableSSL: true
+  metadataStorage:
+    name: my-group
+    externallyManaged: true
+  zookeeperRef:
+    name: zk-demo
+    externallyManaged: true
   tls:
     issuerRef:
       apiGroup: cert-manager.io

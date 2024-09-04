@@ -9,15 +9,16 @@ spec:
     type: s3
     configSecret:
       name: deep-storage-config
-#  metadataStorage:
+  metadataStorage:
 #    type: PostgreSQL
-  ##    name: some-mysql
+    name: my-group
   #    name: demo-pg
   #    namespace: demo
-  #    externallyManaged: true
+    externallyManaged: true
   #    createTables: true
-#  zookeeperRef:
-#    name: zk-100
+  zookeeperRef:
+    name: zk-demo
+    externallyManaged: true
 #    namespace: demo
   topology:
     routers:
@@ -30,18 +31,3 @@ spec:
 #          initContainers:
 #            init-druid:
 #              imagePullPolicy: Always
-#  monitor:
-#    agent: prometheus.io/operator
-#    prometheus:
-#      serviceMonitor:
-#        labels:
-#          release: prometheus
-#        interval: 10s
-#  deletionPolicy: Halt
-#  serviceTemplates:
-#    - alias: primary
-#      spec:
-#        type: LoadBalancer
-#        ports:
-#          - name: routers
-#            port: 8888
