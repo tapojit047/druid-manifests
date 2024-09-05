@@ -1,0 +1,28 @@
+apiVersion: core.kubestash.com/v1alpha1
+kind: RestoreSession
+metadata:
+  name: sample-restore
+  namespace: demo
+spec:
+  manifestOptions:
+    restoreNamespace: dev
+    druid:
+      db: true
+      dbName: new-db
+      deepStorageSecret: true
+      authSecret: true
+      metadataStorage:
+        restore: true
+      zooKeeper:
+        restore: true
+  dataSource:
+    snapshot: latest
+    repository: s3-repo
+    encryptionSecret:
+      name: encry-secret
+      namespace: demo
+  addon:
+    name: druid-addon
+    tasks:
+      - name: mysql-metadata-storage-restore
+      - name: manifest-restore

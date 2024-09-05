@@ -29,7 +29,7 @@ spec:
   - driver: Restic
     executor: Job
     function: mysql-backup
-    name: logical-backup
+    name: mysql-metadata-storage-backup
     parameters:
     - default: --set-gtid-purged=OFF
       name: args
@@ -59,7 +59,7 @@ spec:
   - driver: Restic
     executor: Job
     function: postgres-backup
-    name: logical-backup-pg
+    name: postgres-metadata-storage-backup
     parameters:
     - name: args
       required: false
@@ -116,7 +116,7 @@ spec:
   - driver: Restic
     executor: Job
     function: mysql-restore
-    name: logical-backup-restore
+    name: mysql-metadata-storage-restore
     parameters:
     - name: args
       required: false
@@ -142,7 +142,7 @@ spec:
   - driver: Restic
     executor: Job
     function: postgres-restore
-    name: logical-backup-restore-pg
+    name: postgres-metadata-storage-restore
     parameters:
     - name: args
       required: false

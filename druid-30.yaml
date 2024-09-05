@@ -10,16 +10,16 @@ spec:
     configSecret:
       name: deep-storage-config
   metadataStorage:
-#    type: PostgreSQL
     name: my-group
+    externallyManaged: true
+#    type: PostgreSQL
   #    name: demo-pg
   #    namespace: demo
-    externallyManaged: true
   #    createTables: true
+#    namespace: demo
   zookeeperRef:
     name: zk-demo
     externallyManaged: true
-#    namespace: demo
   topology:
     routers:
       replicas: 1

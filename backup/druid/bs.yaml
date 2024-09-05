@@ -10,7 +10,7 @@ spec:
       endpoint: ap-south-1.linodeobjects.com
       bucket: druid
       region: ap-south-1
-      prefix: druid-pg
+      prefix: druid
       secretName: s3-secret
   usagePolicy:
     allowedNamespaces:
