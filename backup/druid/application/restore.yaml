@@ -11,10 +11,8 @@ spec:
       dbName: new-db
       deepStorageSecret: true
       authSecret: true
-      metadataStorage:
-        restore: true
-      zooKeeper:
-        restore: true
+      metadataStorage: true
+      zookeeper: true
   dataSource:
     snapshot: latest
     repository: s3-repo
@@ -24,5 +22,5 @@ spec:
   addon:
     name: druid-addon
     tasks:
-      - name: mysql-metadata-storage-restore
+#      - name: mysql-metadata-storage-restore
       - name: manifest-restore

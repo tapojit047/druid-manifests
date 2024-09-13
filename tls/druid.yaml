@@ -33,3 +33,5 @@ spec:
   topology:
     routers:
       replicas: 1
+#    overlords:
+#      replicas: 1

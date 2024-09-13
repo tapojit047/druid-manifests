@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: druid-quickstart-routers-pods
+  namespace: demo
+spec:
+  clusterIP: None
+  clusterIPs:
+    - None
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+    - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+    - name: routers
+      port: 9088
+      protocol: TCP
+      targetPort: routers
+  selector:
+    app.kubernetes.io/instance: druid-quickstart
+    app.kubernetes.io/managed-by: kubedb.com
+    app.kubernetes.io/name: druids.kubedb.com
+    kubedb.com/role: routers
+  type: ClusterIP
