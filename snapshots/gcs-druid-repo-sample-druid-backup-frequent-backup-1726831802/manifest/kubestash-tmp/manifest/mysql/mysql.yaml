@@ -1,0 +1,107 @@
+metadata:
+  finalizers:
+  - kubedb.com
+  name: sample-druid-mysql-metadata
+  namespace: demo
+  ownerReferences:
+  - apiVersion: kubedb.com/v1alpha2
+    blockOwnerDeletion: true
+    controller: true
+    kind: Druid
+    name: sample-druid
+    uid: 6704c032-43a7-4fde-8786-81762c032b8a
+spec:
+  allowedReadReplicas:
+    namespaces:
+      from: Same
+  allowedSchemas:
+    namespaces:
+      from: Same
+  authSecret:
+    name: sample-druid-mysql-metadata-auth
+  autoOps: {}
+  coordinator:
+    resources:
+      limits:
+        memory: 256Mi
+      requests:
+        cpu: 200m
+        memory: 256Mi
+    securityContext:
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop:
+        - ALL
+      runAsGroup: 999
+      runAsNonRoot: true
+      runAsUser: 999
+      seccompProfile:
+        type: RuntimeDefault
+  healthChecker:
+    failureThreshold: 1
+    periodSeconds: 10
+    timeoutSeconds: 10
+  init:
+    initialized: true
+    script:
+      configMap:
+        name: sample-druid-init-script
+  podTemplate:
+    controller: {}
+    metadata: {}
+    spec:
+      containerSecurityContext:
+        allowPrivilegeEscalation: false
+        capabilities:
+          drop:
+          - ALL
+        runAsGroup: 999
+        runAsNonRoot: true
+        runAsUser: 999
+        seccompProfile:
+          type: RuntimeDefault
+      initContainers:
+      - name: mysql-init
+        resources:
+          limits:
+            memory: 512Mi
+          requests:
+            cpu: 200m
+            memory: 512Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          runAsGroup: 999
+          runAsNonRoot: true
+          runAsUser: 999
+          seccompProfile:
+            type: RuntimeDefault
+      podPlacementPolicy:
+        name: default
+      resources:
+        limits:
+          memory: 1Gi
+        requests:
+          cpu: 500m
+          memory: 1Gi
+      securityContext:
+        fsGroup: 999
+      serviceAccountName: sample-druid-mysql-metadata
+  replicas: 3
+  storage:
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 1Gi
+  storageType: Durable
+  terminationPolicy: WipeOut
+  topology:
+    group:
+      mode: Single-Primary
+      name: d43e5b5f-4ab9-4f5f-95aa-705e01df6982
+    mode: GroupReplication
+  useAddressType: DNS
+  version: 8.0.35

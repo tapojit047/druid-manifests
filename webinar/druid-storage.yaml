@@ -1,0 +1,14 @@
+apiVersion: autoscaling.kubedb.com/v1alpha1
+kind: DruidAutoscaler
+metadata:
+  name: druid-storage
+  namespace: demo
+spec:
+  databaseRef:
+    name: druid-webinar
+  storage:
+    historicals:
+      expansionMode: "Online"
+      trigger: "On"
+      usageThreshold: 2
+      scalingThreshold: 50

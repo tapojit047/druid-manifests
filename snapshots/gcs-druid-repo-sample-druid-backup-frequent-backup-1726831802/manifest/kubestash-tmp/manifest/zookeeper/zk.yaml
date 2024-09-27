@@ -1,0 +1,73 @@
+metadata:
+  finalizers:
+  - kubedb.com
+  name: sample-druid-zk
+  namespace: demo
+  ownerReferences:
+  - apiVersion: kubedb.com/v1alpha2
+    blockOwnerDeletion: true
+    controller: true
+    kind: Druid
+    name: sample-druid
+    uid: 6704c032-43a7-4fde-8786-81762c032b8a
+spec:
+  adminServerPort: 8080
+  authSecret:
+    name: sample-druid-zk-auth
+  deletionPolicy: WipeOut
+  healthChecker:
+    failureThreshold: 1
+    periodSeconds: 10
+    timeoutSeconds: 10
+  podTemplate:
+    controller: {}
+    metadata: {}
+    spec:
+      containers:
+      - name: zookeeper
+        resources:
+          limits:
+            memory: 1Gi
+          requests:
+            cpu: 500m
+            memory: 1Gi
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          runAsGroup: 100
+          runAsNonRoot: true
+          runAsUser: 100
+          seccompProfile:
+            type: RuntimeDefault
+      initContainers:
+      - name: zookeeper-init
+        resources:
+          limits:
+            memory: 512Mi
+          requests:
+            cpu: 200m
+            memory: 512Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          runAsGroup: 100
+          runAsNonRoot: true
+          runAsUser: 100
+          seccompProfile:
+            type: RuntimeDefault
+      podPlacementPolicy:
+        name: default
+      securityContext:
+        fsGroup: 100
+  replicas: 3
+  storage:
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 1Gi
+  version: 3.7.2

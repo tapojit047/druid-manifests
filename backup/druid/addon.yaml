@@ -31,7 +31,7 @@ spec:
     function: mysql-backup
     name: mysql-metadata-storage-backup
     parameters:
-    - default: --set-gtid-purged=OFF
+    - default: --set-gtid-purged=OFF --ignore-table=druid.druid_config
       name: args
       required: false
       usage: Arguments to be passed to the dump command.

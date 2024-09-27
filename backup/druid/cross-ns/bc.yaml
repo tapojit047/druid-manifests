@@ -31,10 +31,13 @@ spec:
           backend: s3-backend
           directory: /dr-mf
           encryptionSecret:
-           name: encry-secret # some addon may not support encryption
-           namespace: demo
+            name: encry-secret
+            namespace: demo
       addon:
         name: druid-addon
         tasks:
+          - name: mysql-metadata-storage-backup
           - name: manifest-backup
-#          - name: logical-backup-pg
+      retryConfig:
+        maxRetry: 2
+        delay: 1m

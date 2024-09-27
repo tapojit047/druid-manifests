@@ -5,17 +5,18 @@ metadata:
   namespace: demo
 spec:
   version: 30.0.0
+#  version: 28.0.1
   deepStorage:
     type: s3
     configSecret:
       name: deep-storage-config
-  enableSSL: true
   metadataStorage:
     name: my-group
     externallyManaged: true
   zookeeperRef:
     name: zk-demo
     externallyManaged: true
+  enableSSL: true
   tls:
     issuerRef:
       apiGroup: cert-manager.io
@@ -33,5 +34,12 @@ spec:
   topology:
     routers:
       replicas: 1
+  monitor:
+    agent: prometheus.io/operator
+    prometheus:
+      serviceMonitor:
+        labels:
+          release: prometheus
+        interval: 10s
 #    overlords:
 #      replicas: 1
