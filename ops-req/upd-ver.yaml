@@ -1,0 +1,11 @@
+apiVersion: ops.kubedb.com/v1alpha1
+kind: DruidOpsRequest
+metadata:
+  name: druid-restart
+  namespace: demo
+spec:
+  type: UpdateVersion
+  databaseRef:
+    name: druid-quickstart
+  updateVersion:
+    targetVersion: "30.0.0"

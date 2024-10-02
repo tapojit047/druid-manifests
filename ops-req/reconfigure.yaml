@@ -1,0 +1,12 @@
+apiVersion: ops.kubedb.com/v1alpha1
+kind: DruidOpsRequest
+metadata:
+  name: druid-recon
+  namespace: demo
+spec:
+  type: Reconfigure
+  databaseRef:
+    name: druid-quickstart
+  configuration:
+    configSecret:
+      name: new-config

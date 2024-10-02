@@ -1,0 +1,16 @@
+apiVersion: ops.kubedb.com/v1alpha1
+kind: DruidOpsRequest
+metadata:
+  name: druid-hor
+  namespace: demo
+spec:
+  type: HorizontalScaling
+  databaseRef:
+    name: druid-quickstart
+  horizontalScaling:
+    topology:
+      coordinators: 2
+      brokers: 2
+      middleManagers: 2
+      historicals: 2
+      routers: 2
