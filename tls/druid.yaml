@@ -4,8 +4,8 @@ metadata:
   name: druid-quickstart
   namespace: demo
 spec:
-  version: 30.0.0
-#  version: 28.0.1
+#  version: 30.0.0
+  version: 28.0.1
   deepStorage:
     type: s3
     configSecret:
@@ -34,12 +34,12 @@ spec:
   topology:
     routers:
       replicas: 1
-  monitor:
-    agent: prometheus.io/operator
-    prometheus:
-      serviceMonitor:
-        labels:
-          release: prometheus
-        interval: 10s
+#  monitor:
+#    agent: prometheus.io/operator
+#    prometheus:
+#      serviceMonitor:
+#        labels:
+#          release: prometheus
+#        interval: 10s
 #    overlords:
 #      replicas: 1

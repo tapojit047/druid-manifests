@@ -1,0 +1,14 @@
+apiVersion: ops.kubedb.com/v1alpha1
+kind: DruidOpsRequest
+metadata:
+  name: druid-recon-tls-cng-issuer
+  namespace: demo
+spec:
+  type: ReconfigureTLS
+  databaseRef:
+    name: druid-quickstart
+  tls:
+    issuerRef:
+      name: my-new-issuer
+      kind: Issuer
+      apiGroup: "cert-manager.io"
