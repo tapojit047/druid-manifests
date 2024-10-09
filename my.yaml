@@ -1,0 +1,286 @@
+Name:         druid-quickstart-mysql-metadata
+Namespace:    demo
+Labels:       <none>
+Annotations:  <none>
+API Version:  kubedb.com/v1
+Kind:         MySQL
+Metadata:
+  Creation Timestamp:  2024-10-04T06:53:42Z
+  Finalizers:
+    kubedb.com
+  Generation:  3
+  Managed Fields:
+    API Version:  kubedb.com/v1
+    Fields Type:  FieldsV1
+    fieldsV1:
+      f:metadata:
+        f:ownerReferences:
+          .:
+          k:{"uid":"dcd64c07-afa2-4287-8253-7d40661a0441"}:
+      f:spec:
+        .:
+        f:allowedReadReplicas:
+          .:
+          f:namespaces:
+            .:
+            f:from:
+        f:allowedSchemas:
+          .:
+          f:namespaces:
+            .:
+            f:from:
+        f:autoOps:
+        f:deletionPolicy:
+        f:healthChecker:
+          .:
+          f:failureThreshold:
+          f:periodSeconds:
+          f:timeoutSeconds:
+        f:init:
+          .:
+          f:script:
+            .:
+            f:configMap:
+        f:podTemplate:
+          .:
+          f:controller:
+          f:metadata:
+          f:spec:
+            .:
+            f:podPlacementPolicy:
+        f:replicas:
+        f:storage:
+          .:
+          f:accessModes:
+          f:resources:
+            .:
+            f:requests:
+              .:
+              f:storage:
+        f:tls:
+          .:
+          f:issuerRef:
+        f:topology:
+          .:
+          f:group:
+            .:
+            f:mode:
+            f:name:
+          f:mode:
+        f:useAddressType:
+        f:version:
+    Manager:      druid-operator
+    Operation:    Update
+    Time:         2024-10-04T06:53:42Z
+    API Version:  kubedb.com/v1
+    Fields Type:  FieldsV1
+    fieldsV1:
+      f:metadata:
+        f:finalizers:
+          .:
+          v:"kubedb.com":
+      f:spec:
+        f:authSecret:
+        f:podTemplate:
+          f:spec:
+            f:containers:
+            f:initContainers:
+            f:securityContext:
+              .:
+              f:fsGroup:
+            f:serviceAccountName:
+        f:storageType:
+        f:tls:
+          f:certificates:
+    Manager:      my-operator
+    Operation:    Update
+    Time:         2024-10-04T06:53:42Z
+    API Version:  kubedb.com/v1
+    Fields Type:  FieldsV1
+    fieldsV1:
+      f:status:
+        .:
+        f:conditions:
+        f:observedGeneration:
+        f:phase:
+    Manager:      my-operator
+    Operation:    Update
+    Subresource:  status
+    Time:         2024-10-04T06:54:13Z
+  Owner References:
+    API Version:           kubedb.com/v1alpha2
+    Block Owner Deletion:  true
+    Controller:            true
+    Kind:                  Druid
+    Name:                  druid-quickstart
+    UID:                   dcd64c07-afa2-4287-8253-7d40661a0441
+  Resource Version:        355007
+  UID:                     2e96abf2-5282-4e61-b88d-1ab8dffbfbbd
+Spec:
+  Allowed Read Replicas:
+    Namespaces:
+      From:  Same
+  Allowed Schemas:
+    Namespaces:
+      From:  Same
+  Auth Secret:
+    Name:  druid-quickstart-mysql-metadata-auth
+  Auto Ops:
+  Deletion Policy:  Delete
+  Health Checker:
+    Failure Threshold:  1
+    Period Seconds:     10
+    Timeout Seconds:    10
+  Init:
+    Script:
+      Config Map:
+        Name:  druid-quickstart-init-script
+  Pod Template:
+    Controller:
+    Metadata:
+    Spec:
+      Containers:
+        Name:  mysql
+        Resources:
+          Limits:
+            Memory:  1Gi
+          Requests:
+            Cpu:     500m
+            Memory:  1Gi
+        Security Context:
+          Allow Privilege Escalation:  false
+          Capabilities:
+            Drop:
+              ALL
+          Run As Group:     999
+          Run As Non Root:  true
+          Run As User:      999
+          Seccomp Profile:
+            Type:  RuntimeDefault
+        Name:      mysql-coordinator
+        Resources:
+          Limits:
+            Memory:  256Mi
+          Requests:
+            Cpu:     200m
+            Memory:  256Mi
+        Security Context:
+          Allow Privilege Escalation:  false
+          Capabilities:
+            Drop:
+              ALL
+          Run As Group:     999
+          Run As Non Root:  true
+          Run As User:      999
+          Seccomp Profile:
+            Type:  RuntimeDefault
+      Init Containers:
+        Name:  mysql-init
+        Resources:
+          Limits:
+            Memory:  512Mi
+          Requests:
+            Cpu:     200m
+            Memory:  512Mi
+        Security Context:
+          Allow Privilege Escalation:  false
+          Capabilities:
+            Drop:
+              ALL
+          Run As Group:     999
+          Run As Non Root:  true
+          Run As User:      999
+          Seccomp Profile:
+            Type:  RuntimeDefault
+      Pod Placement Policy:
+        Name:  default
+      Security Context:
+        Fs Group:            999
+      Service Account Name:  druid-quickstart-mysql-metadata
+  Replicas:                  3
+  Storage:
+    Access Modes:
+      ReadWriteOnce
+    Resources:
+      Requests:
+        Storage:  1Gi
+  Storage Type:   Durable
+  Tls:
+    Certificates:
+      Alias:  server
+      Dns Names:
+        localhost
+      Ip Addresses:
+        127.0.0.1
+      Secret Name:  druid-quickstart-server-cert
+      Subject:
+        Organizations:
+          kubedb:server
+      Alias:        client
+      Secret Name:  druid-quickstart-client-cert
+      Alias:        metrics-exporter
+      Secret Name:  druid-quickstart-mysql-metadata-metrics-exporter-cert
+    Issuer Ref:
+      API Group:  cert-manager.io
+      Kind:       Issuer
+      Name:       mysql-issuer
+  Topology:
+    Group:
+      Mode:          Single-Primary
+      Name:          dbcea114-43e5-4f54-874b-1eb79909c8a0
+    Mode:            GroupReplication
+  Use Address Type:  DNS
+  Version:           8.0.35
+Status:
+  Conditions:
+    Last Transition Time:  2024-10-04T06:53:42Z
+    Message:               The KubeDB operator has started the provisioning of MySQL: demo/druid-quickstart-mysql-metadata
+    Reason:                DatabaseProvisioningStartedSuccessfully
+    Status:                True
+    Type:                  ProvisioningStarted
+    Last Transition Time:  2024-10-04T06:54:03Z
+    Message:               All desired replicas are ready.
+    Reason:                AllReplicasReady
+    Status:                True
+    Type:                  ReplicaReady
+    Last Transition Time:  2024-10-04T06:54:13Z
+    Message:               database is not accepting connection , dial tcp 10.96.166.185:3306: connect: connection refused
+    Observed Generation:   3
+    Reason:                DatabaseNotAcceptingConnectionRequest
+    Status:                False
+    Type:                  AcceptingConnection
+    Last Transition Time:  2024-10-04T06:54:13Z
+    Message:               database in not accepting connection dial tcp 10.96.166.185:3306: connect: connection refused
+    Observed Generation:   3
+    Reason:                DatabaseNotAcceptingConnectionRequest
+    Status:                False
+    Type:                  Ready
+  Observed Generation:     2
+  Phase:                   Provisioning
+Events:
+  Type    Reason         Age    From                         Message
+  ----    ------         ----   ----                         -------
+  Normal  Phase Changed  4m3s   MySQL operator               phase changed from  to Provisioning reason:
+  Normal  Successful     4m3s   MySQL operator               Successfully created governing service
+  Normal  Successful     4m3s   MySQL operator               Successfully created service for primary/standalone
+  Normal  Successful     4m3s   MySQL operator               Successfully created service for secondary replicas
+  Normal  Successful     4m3s   KubeDB Ops-manager Operator  Successfully created MySQL server certificates
+  Normal  Successful     4m3s   KubeDB Ops-manager Operator  Successfully created MySQL client-certificates
+  Normal  Successful     4m3s   KubeDB Ops-manager Operator  Successfully created MySQL exporter client-certificates
+  Normal  Successful     4m     MySQL operator               Successfully created PetSet
+  Normal  Successful     4m     MySQL operator               Successfully created MySQL
+  Normal  Successful     4m     MySQL operator               Successfully created appbinding
+  Normal  Successful     3m57s  MySQL operator               Successfully patched PetSet
+  Normal  Successful     3m57s  MySQL operator               Successfully patched MySQL
+  Normal  Successful     3m51s  MySQL operator               Successfully patched PetSet
+  Normal  Successful     3m51s  MySQL operator               Successfully patched MySQL
+  Normal  Successful     3m45s  MySQL operator               Successfully patched PetSet
+  Normal  Successful     3m45s  MySQL operator               Successfully patched MySQL
+  Normal  Successful     3m39s  MySQL operator               Successfully patched PetSet
+  Normal  Successful     3m39s  MySQL operator               Successfully patched MySQL
+  Normal  Successful     3m29s  MySQL operator               Successfully patched PetSet
+  Normal  Successful     3m29s  MySQL operator               Successfully patched MySQL
+  Normal  Successful     2m12s  MySQL operator               Successfully patched PetSet
+  Normal  Successful     2m12s  MySQL operator               Successfully patched MySQL
+  Normal  Successful     2m9s   MySQL operator               Successfully patched PetSet
+  Normal  Successful     2m9s   MySQL operator               Successfully patched MySQL

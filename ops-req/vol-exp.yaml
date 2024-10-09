@@ -9,5 +9,5 @@ spec:
     name: druid-quickstart
   volumeExpansion:
     mode: "Offline"
-    middleManagers: 5Gi
-    historicals: 5Gi
+#    middleManagers: 5Gi
+    historicals: 2Gi

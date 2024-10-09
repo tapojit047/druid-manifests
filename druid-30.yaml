@@ -5,26 +5,24 @@ metadata:
 #  name: sample-druid
   namespace: demo
 spec:
-  version: 28.0.1
+  version: 30.0.0
   deepStorage:
     type: s3
     configSecret:
       name: deep-storage-config
-  configSecret:
-    name: custom-1
-  metadataStorage:
-    name: my-group
-    namespace: demo
-    externallyManaged: true
+#  metadataStorage:
+#    name: my-group
+#    namespace: demo
+#    externallyManaged: true
 #    type: PostgreSQL
   #    name: demo-pg
   #    namespace: demo
   #    createTables: true
 #    namespace: demo
-  zookeeperRef:
-    name: zk-demo
-    namespace: demo
-    externallyManaged: true
+#  zookeeperRef:
+#    name: zk-demo
+#    namespace: demo
+#    externallyManaged: true
   topology:
     routers:
       replicas: 1

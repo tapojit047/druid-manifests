@@ -10,12 +10,13 @@ spec:
     type: s3
     configSecret:
       name: deep-storage-config
-  metadataStorage:
-    name: my-group
-    externallyManaged: true
-  zookeeperRef:
-    name: zk-demo
-    externallyManaged: true
+#  metadataStorage:
+#    type: PostgreSQL
+#    name: my-group
+#    externallyManaged: true
+#  zookeeperRef:
+#    name: zk-demo
+#    externallyManaged: true
   enableSSL: true
   tls:
     issuerRef:
