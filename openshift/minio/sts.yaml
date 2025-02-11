@@ -1,0 +1,172 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    v1.min.io/pool: default
+    v1.min.io/tenant: myminio
+  name: myminio-default
+  namespace: demo
+spec:
+  persistentVolumeClaimRetentionPolicy:
+    whenDeleted: Retain
+    whenScaled: Retain
+  podManagementPolicy: Parallel
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      v1.min.io/console: myminio-console
+      v1.min.io/pool: default
+      v1.min.io/tenant: myminio
+  serviceName: myminio-hl
+  template:
+    metadata:
+      annotations:
+        min.io/revision: "0"
+      labels:
+        v1.min.io/console: myminio-console
+        v1.min.io/pool: default
+        v1.min.io/tenant: myminio
+    spec:
+      containers:
+      - args:
+        - server
+        - --certs-dir
+        - /tmp/certs
+        - --console-address
+        - :9090
+        env:
+        - name: MINIO_CONFIG_ENV_FILE
+          value: /tmp/minio/config.env
+        image: quay.io/minio/minio:RELEASE.2024-11-07T00-52-20Z
+        imagePullPolicy: IfNotPresent
+        name: minio
+        ports:
+        - containerPort: 9000
+          name: minio-port
+          protocol: TCP
+        - containerPort: 9090
+          name: console-port
+          protocol: TCP
+        resources: {}
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+              - ALL
+          runAsGroup: 0
+          runAsNonRoot: true
+          runAsUser: 1000670000
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /tmp/minio/
+          name: cfg-vol
+        - mountPath: /export
+          name: data0
+      - args:
+        - sidecar
+        - --tenant
+        - myminio
+        - --config-name
+        - myminio-env-configuration
+        env:
+        - name: CLUSTER_DOMAIN
+          value: cluster.local
+        image: quay.io/minio/operator-sidecar:v7.0.0
+        imagePullPolicy: IfNotPresent
+        name: sidecar
+        readinessProbe:
+          failureThreshold: 1
+          httpGet:
+            path: /ready
+            port: 4444
+            scheme: HTTP
+          initialDelaySeconds: 5
+          periodSeconds: 1
+          successThreshold: 1
+          timeoutSeconds: 1
+        resources: {}
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+              - ALL
+          runAsGroup: 0
+          runAsNonRoot: true
+          runAsUser: 1000670000
+          seccompProfile:
+            type: RuntimeDefault
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /tmp/minio/
+          name: cfg-vol
+        - mountPath: /tmp/minio-config
+          name: configuration
+      dnsPolicy: ClusterFirst
+      initContainers:
+      - args:
+        - validate
+        - --tenant
+        - myminio
+        env:
+        - name: CLUSTER_DOMAIN
+          value: cluster.local
+        image: quay.io/minio/operator-sidecar:v7.0.0
+        imagePullPolicy: IfNotPresent
+        name: validate-arguments
+        resources: {}
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+              - ALL
+          runAsGroup: 0
+          runAsNonRoot: true
+          runAsUser: 1000670000
+          seccompProfile:
+            type: RuntimeDefault
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /tmp/minio/
+          name: cfg-vol
+        - mountPath: /tmp/minio-config
+          name: configuration
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext:
+        runAsGroup: 0
+        runAsNonRoot: true
+        runAsUser: 1000670000
+        seccompProfile:
+          type: RuntimeDefault
+      serviceAccount: myminio-sa
+      serviceAccountName: myminio-sa
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - emptyDir: {}
+        name: cfg-vol
+      - name: configuration
+        projected:
+          defaultMode: 420
+          sources:
+          - secret:
+              name: myminio-env-configuration
+  updateStrategy:
+    rollingUpdate:
+      partition: 0
+    type: RollingUpdate
+  volumeClaimTemplates:
+  - apiVersion: v1
+    kind: PersistentVolumeClaim
+    metadata:
+      name: data0
+    spec:
+      accessModes:
+      - ReadWriteOnce
+      resources:
+        requests:
+          storage: 1Gi
+      volumeMode: Filesystem

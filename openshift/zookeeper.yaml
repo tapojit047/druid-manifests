@@ -1,0 +1,49 @@
+apiVersion: kubedb.com/v1alpha2
+kind: ZooKeeper
+metadata:
+  name: zk-demo
+  namespace: demo
+spec:
+  version: 3.7.2
+  replicas: 3
+  podTemplate:
+    spec:
+      securityContext:
+        fsGroup: 1000670000
+      containers:
+        - name: zookeeper
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+            runAsGroup: 0
+            runAsNonRoot: true
+            runAsUser: 1000670000
+            seccompProfile:
+              type: RuntimeDefault
+          resources:
+            limits:
+              memory: 1Gi
+            requests:
+              cpu: 200m
+              memory: 1Gi
+      initContainers:
+        - name: zookeeper-init
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+            runAsGroup: 0
+            runAsNonRoot: true
+            runAsUser: 1000670000
+            seccompProfile:
+              type: RuntimeDefault
+  storage:
+    resources:
+      requests:
+        storage: "100Mi"
+    # storageClassName: standard
+    accessModes:
+      - ReadWriteOnce

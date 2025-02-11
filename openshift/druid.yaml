@@ -1,0 +1,168 @@
+apiVersion: kubedb.com/v1alpha2
+kind: Druid
+metadata:
+  name: druid-quickstart
+  namespace: demo
+spec:
+  version: 31.0.0
+  deepStorage:
+    type: s3
+    configSecret:
+      name: deep-storage-config
+  metadataStorage:
+    name: my-group
+    externallyManaged: true
+    createTables: true
+  zookeeperRef:
+    name: zk-demo
+    externallyManaged: true
+  topology:
+    coordinators:
+      podTemplate:
+        spec:
+          containers:
+          - name: druid
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                  - ALL
+              runAsGroup: 0
+              runAsNonRoot: true
+              runAsUser: 1000670000
+              seccompProfile:
+                type: RuntimeDefault
+          initContainers:
+          - name: init-druid
+            image: tapojit047/druid-init:_linux_amd64
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                  - ALL
+              runAsGroup: 0
+              runAsNonRoot: true
+              runAsUser: 1000670000
+              seccompProfile:
+                type: RuntimeDefault
+    brokers:
+      podTemplate:
+        spec:
+          containers:
+            - name: druid
+              securityContext:
+                allowPrivilegeEscalation: false
+                capabilities:
+                  drop:
+                    - ALL
+                runAsGroup: 0
+                runAsNonRoot: true
+                runAsUser: 1000670000
+                seccompProfile:
+                  type: RuntimeDefault
+          initContainers:
+            - name: init-druid
+              image: tapojit047/druid-init:_linux_amd64
+              securityContext:
+                allowPrivilegeEscalation: false
+                capabilities:
+                  drop:
+                    - ALL
+                runAsGroup: 0
+                runAsNonRoot: true
+                runAsUser: 1000670000
+                seccompProfile:
+                  type: RuntimeDefault
+    middleManagers:
+      podTemplate:
+        spec:
+          containers:
+            - name: druid
+              securityContext:
+                allowPrivilegeEscalation: false
+                capabilities:
+                  drop:
+                    - ALL
+                runAsGroup: 0
+                runAsNonRoot: true
+                runAsUser: 1000670000
+                seccompProfile:
+                  type: RuntimeDefault
+          initContainers:
+            - name: init-druid
+              image: tapojit047/druid-init:_linux_amd64
+              securityContext:
+                allowPrivilegeEscalation: false
+                capabilities:
+                  drop:
+                    - ALL
+                runAsGroup: 0
+                runAsNonRoot: true
+                runAsUser: 1000670000
+                seccompProfile:
+                  type: RuntimeDefault
+    historicals:
+      podTemplate:
+        spec:
+          containers:
+            - name: druid
+              securityContext:
+                allowPrivilegeEscalation: false
+                capabilities:
+                  drop:
+                    - ALL
+                runAsGroup: 0
+                runAsNonRoot: true
+                runAsUser: 1000670000
+                seccompProfile:
+                  type: RuntimeDefault
+          initContainers:
+            - name: init-druid
+              image: tapojit047/druid-init:_linux_amd64
+              securityContext:
+                allowPrivilegeEscalation: false
+                capabilities:
+                  drop:
+                    - ALL
+                runAsGroup: 0
+                runAsNonRoot: true
+                runAsUser: 1000670000
+                seccompProfile:
+                  type: RuntimeDefault
+    routers:
+      replicas: 1
+      podTemplate:
+        spec:
+          containers:
+            - name: druid
+              securityContext:
+                allowPrivilegeEscalation: false
+                capabilities:
+                  drop:
+                    - ALL
+                runAsGroup: 0
+                runAsNonRoot: true
+                runAsUser: 1000670000
+                seccompProfile:
+                  type: RuntimeDefault
+          initContainers:
+            - name: init-druid
+              image: tapojit047/druid-init:_linux_amd64
+              securityContext:
+                allowPrivilegeEscalation: false
+                capabilities:
+                  drop:
+                    - ALL
+                runAsGroup: 0
+                runAsNonRoot: true
+                runAsUser: 1000670000
+                seccompProfile:
+                  type: RuntimeDefault
+  monitor:
+    agent: prometheus.io/operator
+    prometheus:
+      serviceMonitor:
+        labels:
+          release: prometheus
+        interval: 10s
+  deletionPolicy: Halt

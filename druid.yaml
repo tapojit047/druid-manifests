@@ -2,9 +2,9 @@ apiVersion: kubedb.com/v1alpha2
 kind: Druid
 metadata:
   name: druid-quickstart
-  namespace: demo
+  namespace: demo-2
 spec:
-  version: 30.0.0
+  version: 31.0.0
   deepStorage:
     type: s3
     configSecret:
